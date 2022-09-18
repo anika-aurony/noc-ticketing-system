@@ -16,14 +16,18 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+    
+
     let signInError;
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
 
-    // if (user) {
-    //     navigate(from, { replace: true });
-    // }
+    if (user || gUser) {
+        navigate(from, { replace: true });
+    }
+
+   
 
     useEffect( () =>{
         if (user) {
@@ -35,12 +39,17 @@ const Login = () => {
         signInError= <p className='text-red-500'><small>{error?.message || gError?.message }</small></p>
     }
 
-    if(error || gError){
-        signInError= <p className='text-red-500'><small>{error?.message || gError?.message }</small></p>
-    }
+   
 
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
+    }
+
+    if(loading || gLoading){
+        return <div className='h-screen flex justify-center items-center'>
+            <button class="btn  loading  ">loading</button>
+        </div>
+        
     }
 
     return (
@@ -102,7 +111,7 @@ const Login = () => {
                         {signInError}
                         <input className='btn w-full max-w-xs text-white' type="submit" value="Login" />
                     </form>
-                    <p><small>New to Jamye's Tool <Link className='text-primary' to="/signup">Create New Account</Link></small></p>
+                    <p><small>New to NOC Ticketing System? <Link className='text-primary' to="/signup">Create New Account</Link></small></p>
                     <div className="divider">OR</div>
                     <button
                         onClick={() => signInWithGoogle()}

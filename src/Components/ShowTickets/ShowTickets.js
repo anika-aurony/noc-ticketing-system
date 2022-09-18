@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useSyncExternalStore } from 'react';
+import React, { useEffect, useState } from 'react';
+import UpdateModal from './UpdateModal';
 
 const ShowTickets = () => {
     const [complains, setComplains] = useState([]);
+    const [update, setUpdate] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:5000/ticket')
@@ -9,12 +11,7 @@ const ShowTickets = () => {
             .then(data => setComplains(data))
     }, [])
 
-    const updateStatus = event=> {
-        event.preventDefault();
-        const status = event.target.status.value;
-        console.log(event)
-        console.log(status)
-     }
+    
 
     return (
         <div className='m-11'>
@@ -23,11 +20,14 @@ const ShowTickets = () => {
                 <table class="table table-compact w-full">
                     <thead>
                         <tr>
-
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Type</th>
                             <th>complain</th>
                             <th>Status</th>
+                            <th>Assign</th>
+                            
+                            <th>ETR</th>
                             <th>Update</th>
 
                         </tr>
@@ -35,33 +35,19 @@ const ShowTickets = () => {
                     <tbody>
                         {
                             complains.map(complain => <tr key={complain._id}>
-
+                                <td>{complain._id}</td>
                                 <td>{complain.name}</td>
                                 <td>{complain.type}</td>
                                 <td>{complain.complain}</td>
                                 <td>{complain.status}</td>
+                                <td>{complain.assign}</td>
+                                <td>{complain.ETR}</td>
                                 
                                 <td>
-                                    <label for="my-modal" class="btn modal-button">Update</label>
+                                    <label onClick={()=> setUpdate(complain)} for="update-modal" class="btn modal-button">Update</label>
 
 
-                                    <input type="checkbox" id="my-modal" class="modal-toggle" />
-                                    <div class="modal">
-                                        <div class="modal-box">
-                                            <h3 class="font-bold text-lg">Please Update Current Status</h3>
-                                            <select name="status" class="select select-bordered ">
-                                                <option disabled selected>{complain.status}</option>
-                                                <option>Pending</option>
-                                                <option>On-progress</option>
-                                                <option>Resolve</option>
-
-
-                                            </select>
-                                            <div class="modal-action">
-                                                <label for="my-modal" class="btn" onClick={()=> updateStatus(complain._id)}>Update</label>
-                                            </div>
-                                        </div>
-                                    </div></td>
+                                </td>
                                 
                             </tr>)
                         }
@@ -72,6 +58,9 @@ const ShowTickets = () => {
 
 
                 </table>
+                {
+                    update && <UpdateModal update={update} setUpdate={setUpdate} setComplains={setComplains}></UpdateModal>
+                }
             </div>
         </div >
     );

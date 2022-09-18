@@ -7,6 +7,7 @@ import Complain from './Components/Complain/Complain';
 import ShowTickets from './Components/ShowTickets/ShowTickets';
 import Login from './Components/Login/Login';
 import SignUp from './Components/Login/SignUp';
+import RequireAuth from './Components/Login/RequireAuth';
 
 function App() {
   return (
@@ -14,8 +15,17 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="complain" element={<Complain />} />
-        <Route path="showticket" element={<ShowTickets />} />
+        <Route path="complain" element={ 
+        <RequireAuth>
+          <Complain />
+        </RequireAuth>
+      } />
+        <Route path="showticket" element={
+          <RequireAuth>
+            <ShowTickets />
+          </RequireAuth>
+        
+        } />
         <Route path="login" element={<Login></Login>}/>
         <Route path="signup" element={<SignUp/>}/>
       </Routes>
