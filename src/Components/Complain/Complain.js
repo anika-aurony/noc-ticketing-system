@@ -1,15 +1,16 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const Complain = () => {
-    const handleMail = (event) => {
-        
-    }
-
+    const [user] = useAuthState(auth);
+    console.log(user.email);
     const handleAddComplain = (event) => {
 
 
         event.preventDefault();
 
+        const clientMail = event.target.clientMail.value;
         const name = event.target.name.value;
         const type = event.target.type.value;
         const complain = event.target.complain.value;
@@ -17,14 +18,14 @@ const Complain = () => {
         const ETR = "2hrs";
         const status = "pending";
         const assign = "Level 1";
-        
+
         // const complainEmail = 'ashrafata87@gmail.com';
-        
-        
+
+
         // const ETR; 
 
 
-        const ticket = { name, type, complain, status, assign, ETR, complainEmail };
+        const ticket = { clientMail, name, type, complain, status, assign, ETR, complainEmail };
         console.log(ticket);
 
         fetch('http://localhost:5000/ticket', {
@@ -47,7 +48,16 @@ const Complain = () => {
                 <form onSubmit={handleAddComplain}>
                     <div className="form-control w-full max-w-xs">
                         <label class="label">
-                            <span class="label-text">What is your name?</span>
+                            <span class="label-text">Your email</span>
+
+                        </label>
+                        <input type="text" name="clientMail" disabled value={user.email} class="input input-bordered w-96" />
+
+                    </div>
+                    <br />
+                    <div className="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">Your company name</span>
 
                         </label>
                         <input type="text" name="name" placeholder="Type here" class="input input-bordered w-96" />
