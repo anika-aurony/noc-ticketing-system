@@ -21,7 +21,10 @@ const Navbar = () => {
                     </label>
                     <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link to="/">Home</Link></li>
-                        <li><Link to="/complain">Complain</Link></li>
+                        
+                        {
+                            user && <li><Link to="/complain">Complain</Link></li>
+                        }
                         <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
                         <li><Link to="/showticket">Tickets</Link></li>
                     </ul>
@@ -31,9 +34,21 @@ const Navbar = () => {
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal p-0">
                     <li><Link to="/">Home</Link></li>
-                    <li><Link to="/complain">Complain</Link></li>
                     
-                    <li><Link to="/showticket">Tickets</Link></li>
+                    
+                    
+                    {
+                        user &&  <li><Link to="/complain">Complain</Link></li>
+                    }
+                    {
+                        user && <li><Link to="/showticket">Tickets</Link></li>
+                    }
+                    {
+                        user && <li><Link to="/dashboard">Complain Status</Link></li>
+                    }
+                    {
+                        user && <li><Link to="/kpi">KPI</Link></li>
+                    }
                     <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
                 </ul>
             </div>
