@@ -22,38 +22,39 @@ const Dashboard = () => {
 
 
     return (
-        <div className='m-11'>
-          
+        <div className=' m-11 '>
+
             <h1 className='text-2xl text-center my-4'>My Tickets: {g.length}</h1>
             <div class="overflow-x-auto">
                 <table class="table table-compact w-full">
-                <thead>
+                    <thead>
                         <tr>
-                            
+
                             <th>Name</th>
                             <th>Type</th>
                             <th>complain</th>
                             <th>Status</th>
                             <th>Assign</th>
-                            
+
                             <th>ETR</th>
-                            
+
 
                         </tr>
                     </thead>
                     <tbody>
                         {
                             g.map(complain => <tr key={complain._id}>
-                                
+
                                 <td>{complain.name}</td>
                                 <td>{complain.type}</td>
                                 <td>{complain.complain}</td>
+                                
                                 <td>{complain.status}</td>
                                 <td>{complain.assign}</td>
                                 <td>{complain.ETR}</td>
-                                
-                                
-                                
+
+
+
                             </tr>)
                         }
 

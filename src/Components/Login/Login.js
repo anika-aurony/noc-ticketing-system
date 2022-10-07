@@ -4,6 +4,7 @@ import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 
 const Login = () => {
@@ -16,7 +17,7 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
-    
+    const [token] = useToken(user || gUser)
 
     let signInError;
     const navigate = useNavigate();
@@ -24,16 +25,16 @@ const Login = () => {
     let from = location.state?.from?.pathname || "/";
 
     if (user || gUser) {
-        navigate(from, { replace: true });
+        navigate("/complain");
     }
 
    
 
-    useEffect( () =>{
-        if (user) {
-            navigate(from, { replace: true });
-        }
-    }, [from, navigate])
+    // useEffect( () =>{
+    //     if (token) {
+    //         navigate(from, { replace: true });
+    //     }
+    // }, [from, navigate])
 
     if(error || gError){
         signInError= <p className='text-red-500'><small>{error?.message || gError?.message }</small></p>

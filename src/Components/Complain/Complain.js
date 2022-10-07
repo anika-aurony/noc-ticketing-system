@@ -1,9 +1,11 @@
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const Complain = () => {
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
     console.log(user.email);
     const handleAddComplain = (event) => {
 
@@ -25,7 +27,7 @@ const Complain = () => {
         // const ETR; 
 
 
-        const ticket = { clientMail, name, type, complain, status, assign, ETR, complainEmail };
+        let ticket = { clientMail, name, type, complain, status, assign, ETR, complainEmail };
         console.log(ticket);
 
         fetch('http://localhost:5000/ticket', {
@@ -38,12 +40,13 @@ const Complain = () => {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                window.confirm("success", data)
+                window.confirm("success", data);
+                navigate("/dashboard")
             })
 
     }
     return (
-        <div  >
+        <div  className='bg-gradient-to-r from-cyan-600 to-cyan-100'>
             <h1 className=" grid justify-items-center text-2xl">Register Your Complain</h1>
             <div className="grid justify-items-center ">
                 <form onSubmit={handleAddComplain}>
@@ -55,8 +58,8 @@ const Complain = () => {
                         <input type="text" name="clientMail" disabled value={user.email} class="input input-bordered w-96" />
 
                     </div>
-                    <br />
-                    <div className="form-control w-full max-w-xs">
+                    {/* <br /> */}
+                    <div className="form-control w-full max-w-xs mt-1">
                         <label class="label">
                             <span class="label-text">Your company name</span>
 
@@ -64,8 +67,8 @@ const Complain = () => {
                         <input type="text" name="name" placeholder="Type here" class="input input-bordered w-96" />
 
                     </div>
-                    <br />
-                    <div class="form-control w-full max-w-xs">
+                    {/* <br /> */}
+                    <div class="form-control w-full max-w-xs mt-1">
                         <label class="label">
                             <span class="label-text">Type of Complain</span>
 
@@ -79,22 +82,22 @@ const Complain = () => {
                         </select>
 
                     </div>
-                    <br />
-                    <div class="form-control w-full max-w-xs">
+                    {/* <br /> */}
+                    <div class="form-control w-full max-w-xs mt-1">
                         <label class="label">
                             <span class="label-text">Concern Team</span>
 
                         </label>
                         <select name="complainEmail" class="select select-bordered w-96">
                             <option disabled selected>Pick One</option>
-                            <option value={"ashrafata87@gmail.com"}>Logical</option>
-                            <option value={"auronyanu@gmail.com"}>Physical</option>
-                            <option value={"ashrafuleee10@gmail.com"}>Others</option>
+                            <option value={"logical.noc@gmail.com"}>Logical</option>
+                            <option value={"physical.noc@gmail.com"}>Physical</option>
+                            <option value={"others.noc@gmail.com"}>Others</option>
                         </select>
 
                     </div>
-                    <br />
-                    <div class="form-control">
+                    {/* <br /> */}
+                    <div class="form-control mt-1">
                         <label class="label">
                             <span class="label-text">Your complain</span>
 
@@ -102,7 +105,7 @@ const Complain = () => {
                         <textarea name="complain" class="textarea textarea-bordered h-24 w-96" placeholder="complain"></textarea>
 
                     </div>
-                    <br />
+                    {/* <br /> */}
                     {/* <div className="form-control w-full max-w-xs">
                         <label class="label">
                             <span class="label-text">Estimated Time to resolve</span>
@@ -111,8 +114,8 @@ const Complain = () => {
                         <input type="text" name="etr" disabled value={type === 'logical' ? "2hr" : "12hr"} />
 
                     </div> */}
-                    <br />
-                    <input type='submit' class="btn btn-outline btn-primary" value="Submit" />
+                    {/* <br /> */}
+                    <input type='submit' class="btn btn-outline btn-tertiary w-full my-2" value="Submit" />
                 </form>
 
             </div>

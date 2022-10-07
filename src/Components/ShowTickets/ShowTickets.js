@@ -11,11 +11,15 @@ const ShowTickets = () => {
             .then(data => setComplains(data))
     }, [])
 
-    
+    const pFilter = complains.filter(complain => complain.type === "Physical Issue")
+    const lFilter = complains.filter(complain => complain.type === "Logical Issue")
+    const OFilter = complains.filter(complain => complain.status === "pending")
+    console.log(OFilter);
 
     return (
         <div className='m-11'>
-            <h1 className='text-2xl text-center my-4'>Complain Tickets</h1>
+            <h1 className='text-2xl text-center my-4'>Complain Tickets: {complains.length}</h1>
+            <h1 className='text-xl text-center my-4'>Pending Ticket: {OFilter.length} </h1>
             <div class="overflow-x-auto">
                 <table class="table table-compact w-full">
                     <thead>
@@ -62,6 +66,10 @@ const ShowTickets = () => {
                     update && <UpdateModal update={update} setUpdate={setUpdate} setComplains={setComplains}></UpdateModal>
                 }
             </div>
+
+
+
+            
         </div >
     );
 };

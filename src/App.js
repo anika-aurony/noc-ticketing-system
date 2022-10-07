@@ -10,10 +10,11 @@ import SignUp from './Components/Login/SignUp';
 import RequireAuth from './Components/Login/RequireAuth';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Kpi from './Components/Kpi/Kpi';
+import Users from './Components/Users/Users';
 
 function App() {
   return (
-    <div>
+    <div >
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -37,6 +38,12 @@ function App() {
         <Route path="kpi" element={
           <RequireAuth>
             <Kpi/>
+          </RequireAuth>
+
+        } />
+        <Route path="users" element={
+          <RequireAuth>
+            <Users/>
           </RequireAuth>
 
         } />

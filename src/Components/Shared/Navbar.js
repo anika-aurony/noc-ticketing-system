@@ -1,19 +1,34 @@
 import { signOut } from 'firebase/auth';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from '../../firebase.init';
+import useAdmin from '../../hooks/useAdmin';
 
 const Navbar = () => {
     const [user] = useAuthState(auth);
+    const [admin] = useAdmin(user);
+    const navigate = useNavigate();
+
+    const [complains, setComplains] = useState([]);
+    
+
+    useEffect(() => {
+        fetch('http://localhost:5000/ticket')
+            .then(res => res.json())
+            .then(data => setComplains(data))
+    }, [])
+
+    const OFilter = complains.filter(complain => complain.status === "pending")
 
     const logout = () => {
         signOut(auth);
-
+        localStorage.removeItem('accessToken')
+        navigate('/')
     };
 
     return (
-        <div class="navbar bg-base-100">
+        <div class="navbar bg-gradient-to-r from-cyan-700 to-cyan-400">
             <div class="navbar-start">
                 <div class="dropdown">
                     <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -26,10 +41,11 @@ const Navbar = () => {
                             user && <li><Link to="/complain">Complain</Link></li>
                         }
                         <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
+                        
                         <li><Link to="/showticket">Tickets</Link></li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost normal-case text-xl">NOC Ticketing</a>
+                <a class="btn btn-ghost normal-case text-xl">NOC Ticketing System</a>
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal p-0">
@@ -41,13 +57,18 @@ const Navbar = () => {
                         user &&  <li><Link to="/complain">Complain</Link></li>
                     }
                     {
-                        user && <li><Link to="/showticket">Tickets</Link></li>
+                        admin && <li><Link to="/showticket">Tickets
+                        <div class="badge badge-error absolute top-1 right-0">{OFilter.length}</div>
+                        </Link></li>
                     }
                     {
-                        user && <li><Link to="/dashboard">Complain Status</Link></li>
+                        user && !admin && <li><Link to="/dashboard">Complain Status</Link></li>
                     }
                     {
-                        user && <li><Link to="/kpi">KPI</Link></li>
+                        admin && <li><Link to="/kpi">KPI</Link></li>
+                    }
+                    {
+                        admin && <li><Link to="/users">All Users</Link></li>
                     }
                     <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
                 </ul>
