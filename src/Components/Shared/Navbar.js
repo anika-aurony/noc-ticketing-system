@@ -11,7 +11,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [complains, setComplains] = useState([]);
-    
+
 
     useEffect(() => {
         fetch('http://localhost:5000/ticket')
@@ -36,29 +36,45 @@ const Navbar = () => {
                     </label>
                     <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link to="/">Home</Link></li>
+
                         
+
                         {
                             user && <li><Link to="/complain">Complain</Link></li>
                         }
+                        {
+                            admin && <li><Link to="/showticket">Tickets
+                                <div class="badge badge-error absolute top-1 right-0">{OFilter.length}</div>
+                            </Link></li>
+                        }
+                        {
+                            user && !admin && <li><Link to="/dashboard">Complain Status</Link></li>
+                        }
+                        {
+                            admin && <li><Link to="/kpi">KPI</Link></li>
+                        }
+                        {
+                            admin && <li><Link to="/users">All Users</Link></li>
+                        }
                         <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
-                        
-                        <li><Link to="/showticket">Tickets</Link></li>
+
+
                     </ul>
                 </div>
-                <a class="btn btn-ghost normal-case text-xl">NOC Ticketing System</a>
+                <a className="btn btn-ghost normal-case text-xl">NOC Ticketing System</a>
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal p-0">
                     <li><Link to="/">Home</Link></li>
-                    
-                    
-                    
+
+
+
                     {
-                        user &&  <li><Link to="/complain">Complain</Link></li>
+                        user && <li><Link to="/complain">Complain</Link></li>
                     }
                     {
                         admin && <li><Link to="/showticket">Tickets
-                        <div class="badge badge-error absolute top-1 right-0">{OFilter.length}</div>
+                            <div class="badge badge-error absolute top-1 right-0">{OFilter.length}</div>
                         </Link></li>
                     }
                     {
@@ -73,7 +89,7 @@ const Navbar = () => {
                     <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
                 </ul>
             </div>
-            
+
         </div>
     );
 };
