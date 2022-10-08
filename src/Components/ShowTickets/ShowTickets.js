@@ -29,6 +29,7 @@ const ShowTickets = () => {
                             <th>Type</th>
                             <th>complain</th>
                             <th>Status</th>
+                            <th>Resolve Date</th>
                             <th>Assign</th>
                             
                             <th>ETR</th>
@@ -44,6 +45,7 @@ const ShowTickets = () => {
                                 <td>{complain.type}</td>
                                 <td>{complain.complain}</td>
                                 <td>{complain.status}</td>
+                                <td>{complain.resolveDate}</td>
                                 <td>{complain.assign}</td>
                                 <td>{complain.ETR}</td>
                                 

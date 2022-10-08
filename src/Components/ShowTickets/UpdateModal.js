@@ -11,7 +11,8 @@ const UpdateModal = ({ update, setUpdate, setComplains }) => {
         const status = event.target.status.value;
         const assign = event.target.assign.value;
         const ETR = event.target.ETR.value;
-        const updateComplain = {name, complainEmail, clientMail, status, assign, ETR };
+        const resolveDate = event.target.resolveDate.value;
+        const updateComplain = {name, complainEmail, clientMail, status, assign, ETR, resolveDate };
         const url = `http://localhost:5000/ticket/${id}`
         console.log(url)
 
@@ -64,9 +65,11 @@ const UpdateModal = ({ update, setUpdate, setComplains }) => {
                             <option disabled selected>{ETR}</option>
                             <option value={"1 hr"}>1 hr</option>
                             <option value={"2 hrs"}>2 hrs</option>
+                            <option value={"3 hrs"}>3 hrs</option>
                             <option value={"6 hrs"}>6 hrs</option>
                             <option value={"12 hrs"}>12 hrs</option>
                         </select>
+                        <input type="text" name='resolveDate' placeholder='Resolve Date 2020-08-11'  class="input input-bordered w-full max-w-xs" />
                         <input type="Submit" value="Submit" class="btn btn-primary input input-bordered w-full max-w-xs" />
                     </form>
 
